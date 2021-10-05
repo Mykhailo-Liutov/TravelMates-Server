@@ -1,0 +1,13 @@
+package cz.cvut.fit.travelmatesserver
+
+import org.junit.jupiter.api.Test
+import org.springframework.boot.test.context.SpringBootTest
+
+@SpringBootTest
+class TravelMatesServerApplicationTests {
+
+    @Test
+    fun contextLoads() {
+    }
+
+}
