@@ -24,6 +24,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security:2.6.2")
     implementation("org.springframework.security:spring-security-test:5.5.1")
 
+    implementation("mysql:mysql-connector-java:8.0.25")
+    implementation("org.springframework.boot:spring-boot-starter-data-jdbc:2.6.2")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.6.2")
+
     implementation("com.auth0:java-jwt:3.18.2")
     implementation("com.auth0:jwks-rsa:0.20.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.6.2")

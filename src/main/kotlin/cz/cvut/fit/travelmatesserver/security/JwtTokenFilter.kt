@@ -66,11 +66,15 @@ class JwtTokenFilter : OncePerRequestFilter() {
 
     private fun extractDetails(token: String): UserDetails {
         val jwt = JWT.decode(token)
-        return UserDetails(jwt.getClaim(CLAIM_KEY_EMAIL).asString())
+        return UserDetails(
+            jwt.getClaim(CLAIM_KEY_EMAIL).asString(),
+            jwt.getClaim(CLAIM_KEY_NAME).asString()
+        )
     }
 
     companion object {
         private const val CLAIM_KEY_EMAIL = "email"
+        private const val CLAIM_KEY_NAME = "name"
     }
 
 }
