@@ -4,4 +4,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserService {
+
+    //TODO Business logic here
+
 }
