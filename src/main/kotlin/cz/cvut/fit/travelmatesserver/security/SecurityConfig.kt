@@ -22,6 +22,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
 
+        config.csrf().disable()
+
         // Set unauthorized requests exception handler
         config = config
             .exceptionHandling()
@@ -35,7 +37,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
 
         // Set permissions on endpoints
         config.authorizeRequests()
-            .anyRequest().authenticated()
+            .anyRequest().fullyAuthenticated()
 
         // Add JWT token filter
         config.addFilterBefore(
