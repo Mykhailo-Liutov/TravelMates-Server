@@ -30,7 +30,7 @@ class UserRestController {
     }
 
     @PutMapping
-    fun updateUser(authentication: Authentication,@RequestBody newUser: UserUpdateDto): ResponseEntity<UserDto> {
+    fun updateUser(authentication: Authentication, @RequestBody newUser: UserUpdateDto): ResponseEntity<UserDto> {
         val userDetails = authentication.principal as UserDetails
         val updatedUser = userService.updateUser(userDetails.email, newUser.name, newUser.picture)
         return ResponseEntity.ok(UserDto(updatedUser.email, updatedUser.name, updatedUser.picture))
