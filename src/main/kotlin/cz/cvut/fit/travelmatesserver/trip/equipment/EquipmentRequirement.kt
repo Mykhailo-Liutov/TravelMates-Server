@@ -1,6 +1,6 @@
 package cz.cvut.fit.travelmatesserver.trip.equipment
 
-import cz.cvut.fit.travelmatesserver.trip.models.Trip
+import cz.cvut.fit.travelmatesserver.trip.models.entities.Trip
 import javax.persistence.*
 
 @Entity(name = "equipment_requirement")

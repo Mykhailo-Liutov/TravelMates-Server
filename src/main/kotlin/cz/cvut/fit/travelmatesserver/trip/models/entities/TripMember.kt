@@ -1,4 +1,4 @@
-package cz.cvut.fit.travelmatesserver.trip.models
+package cz.cvut.fit.travelmatesserver.trip.models.entities
 
 import cz.cvut.fit.travelmatesserver.trip.equipment.EquipmentRequirement
 import cz.cvut.fit.travelmatesserver.user.models.User
@@ -17,8 +17,8 @@ class TripMember(
     @Column(name = "provided_equipment")
     val providedEquipment: List<EquipmentRequirement>,
     @ManyToOne
-    @JoinColumn(name = "trip")
-    val trip: Trip,
+    @JoinColumn(name = "member_trip_id")
+    val memberTrip: Trip,
     @ManyToOne
     @JoinColumn(name = "member_user")
     val memberUser: User

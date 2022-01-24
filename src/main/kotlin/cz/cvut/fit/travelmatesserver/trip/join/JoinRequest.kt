@@ -1,6 +1,6 @@
 package cz.cvut.fit.travelmatesserver.trip.join
 
-import cz.cvut.fit.travelmatesserver.trip.models.Trip
+import cz.cvut.fit.travelmatesserver.trip.models.entities.Trip
 import cz.cvut.fit.travelmatesserver.user.models.User
 import java.time.LocalDateTime
 import javax.persistence.*
