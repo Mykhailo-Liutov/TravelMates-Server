@@ -35,9 +35,9 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             }
             .and()
 
-        // Set permissions on endpoints
         config.authorizeRequests()
-            .anyRequest().fullyAuthenticated()
+            .antMatchers("/actuator/*").permitAll()
+            .anyRequest().authenticated()
 
         // Add JWT token filter
         config.addFilterBefore(

@@ -28,7 +28,7 @@ class JwtTokenFilter : OncePerRequestFilter() {
     ) {
         // Verifying the format of the header
         val header = request.getHeader(HttpHeaders.AUTHORIZATION)
-        if (header.isEmpty() || !header.startsWith("Bearer ")) {
+        if (header == null || header.isEmpty() || !header.startsWith("Bearer ")) {
             chain.doFilter(request, response)
             return
         }
