@@ -1,6 +1,7 @@
 package cz.cvut.fit.travelmatesserver.trip
 
 import cz.cvut.fit.travelmatesserver.security.UserDetails
+import cz.cvut.fit.travelmatesserver.trip.models.DetailedTripDto
 import cz.cvut.fit.travelmatesserver.trip.models.NewTripDto
 import cz.cvut.fit.travelmatesserver.trip.models.TripDto
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,6 +31,15 @@ class TripsRestController {
         val userDetails = authentication.principal as UserDetails
         val trips = tripsService.getTrips(userDetails.email, filter ?: TripsFilter.UNKNOWN)
         return ResponseEntity.ok(trips)
+    }
+
+    @GetMapping("{tripId}")
+    fun getTripDetails(
+        authentication: Authentication,
+        @PathVariable("tripId") tripId: Long
+    ): ResponseEntity<DetailedTripDto> {
+        val detailedTrip = tripsService.getTripDetails(tripId)
+        return ResponseEntity.ok(detailedTrip)
     }
 
     companion object {

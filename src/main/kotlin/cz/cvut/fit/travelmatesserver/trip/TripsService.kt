@@ -58,6 +58,37 @@ class TripsService {
         }
     }
 
+    fun getTripDetails(tripId: Long): DetailedTripDto {
+        val trip = tripsRepository.findTripById(tripId)
+        val pendingRequirements = trip.requirements.filterNot { requirement ->
+            trip.members.any { it.providedEquipment.contains(requirement) }
+        }.map {
+            RequirementDto(it.id, it.name, false)
+        }
+        val ownerMember = with(trip.owner) {
+            MemberDto(email, picture, name, trip.ownerContact, emptyList())
+        }
+        val members = trip.members.map {
+            val user = it.memberUser
+            val equipment = it.providedEquipment.map {
+                RequirementDto(it.id, it.name, true)
+            }
+            //TODO Add member contact
+            MemberDto(user.email, user.picture, user.name, "TODO", equipment)
+        }
+        return DetailedTripDto(
+            trip.id,
+            trip.title,
+            trip.description,
+            trip.suggestedDate,
+            trip.state,
+            Coordinates(trip.latitude, trip.longitude),
+            pendingRequirements,
+            ownerMember,
+            members
+        )
+    }
+
     private fun getAllTrips(): List<TripDto> {
         val trips = tripsRepository.findAll()
         return trips.map {
