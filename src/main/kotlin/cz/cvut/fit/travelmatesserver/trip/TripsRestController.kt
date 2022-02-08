@@ -1,6 +1,7 @@
 package cz.cvut.fit.travelmatesserver.trip
 
 import cz.cvut.fit.travelmatesserver.security.UserDetails
+import cz.cvut.fit.travelmatesserver.trip.join.CreateJoinRequestDto
 import cz.cvut.fit.travelmatesserver.trip.models.DetailedTripDto
 import cz.cvut.fit.travelmatesserver.trip.models.NewTripDto
 import cz.cvut.fit.travelmatesserver.trip.models.TripDto
@@ -40,6 +41,17 @@ class TripsRestController {
     ): ResponseEntity<DetailedTripDto> {
         val detailedTrip = tripsService.getTripDetails(tripId)
         return ResponseEntity.ok(detailedTrip)
+    }
+
+    @PostMapping("{tripId}/join")
+    fun sendJoinRequest(
+        authentication: Authentication,
+        @PathVariable("tripId") tripId: Long,
+        @RequestBody createTripRequestDto: CreateJoinRequestDto
+    ): ResponseEntity<Unit> {
+        val userDetails = authentication.principal as UserDetails
+        tripsService.sendJoinRequest(userDetails.email, tripId, createTripRequestDto)
+        return ResponseEntity.ok().build()
     }
 
     companion object {

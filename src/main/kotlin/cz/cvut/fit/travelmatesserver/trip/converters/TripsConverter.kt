@@ -17,7 +17,7 @@ class TripsConverter {
                 description,
                 location,
                 requirements.map {
-                    RequirementDto(id, it.name, false) //TODO Check fulfillment
+                    RequirementDto(it.id, it.name, false) //TODO Check fulfillment
                 },
                 PublicUserDto(owner.name, owner.picture),
                 state,
