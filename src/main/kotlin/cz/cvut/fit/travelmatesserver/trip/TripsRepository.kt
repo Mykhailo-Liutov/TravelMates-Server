@@ -29,4 +29,6 @@ interface TripsRepository : JpaRepository<Trip, Long> {
                 "      trip_member.member_user IS NULL OR trip_member.member_user != :userEmail)"
     )
     fun findExploreTrips(@Param("userEmail") userEmail: String): List<Trip>
+
+    fun findTripById(tripId: Long): Trip
 }

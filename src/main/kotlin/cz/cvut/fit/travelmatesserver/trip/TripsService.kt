@@ -3,12 +3,17 @@ package cz.cvut.fit.travelmatesserver.trip
 import cz.cvut.fit.travelmatesserver.trip.converters.TripsConverter
 import cz.cvut.fit.travelmatesserver.trip.equipment.EquipmentRepository
 import cz.cvut.fit.travelmatesserver.trip.equipment.EquipmentRequirement
+import cz.cvut.fit.travelmatesserver.trip.join.CreateJoinRequestDto
+import cz.cvut.fit.travelmatesserver.trip.join.JoinRequest
+import cz.cvut.fit.travelmatesserver.trip.join.JoinRequestRepository
+import cz.cvut.fit.travelmatesserver.trip.join.JoinRequestState
 import cz.cvut.fit.travelmatesserver.trip.models.*
 import cz.cvut.fit.travelmatesserver.trip.models.entities.Trip
 import cz.cvut.fit.travelmatesserver.trip.models.entities.TripState
 import cz.cvut.fit.travelmatesserver.user.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 class TripsService {
@@ -21,6 +26,9 @@ class TripsService {
 
     @Autowired
     lateinit var equipmentRepository: EquipmentRepository
+
+    @Autowired
+    lateinit var joinRequestRepository: JoinRequestRepository
 
     @Autowired
     lateinit var tripsConverter: TripsConverter
@@ -56,6 +64,56 @@ class TripsService {
             TripsFilter.MY_TRIPS -> getMyTrips(userEmail)
             TripsFilter.UNKNOWN -> getAllTrips()
         }
+    }
+
+    fun getTripDetails(tripId: Long): DetailedTripDto {
+        val trip = tripsRepository.findTripById(tripId)
+        val pendingRequirements = trip.requirements.filterNot { requirement ->
+            trip.members.any { it.providedEquipment.contains(requirement) }
+        }.map {
+            RequirementDto(it.id, it.name, false)
+        }
+        val ownerMember = with(trip.owner) {
+            MemberDto(email, picture, name, trip.ownerContact, emptyList())
+        }
+        val members = trip.members.map {
+            val user = it.memberUser
+            val equipment = it.providedEquipment.map {
+                RequirementDto(it.id, it.name, true)
+            }
+            //TODO Add member contact
+            MemberDto(user.email, user.picture, user.name, "TODO", equipment)
+        }
+        return DetailedTripDto(
+            trip.id,
+            trip.title,
+            trip.description,
+            trip.suggestedDate,
+            trip.state,
+            Coordinates(trip.latitude, trip.longitude),
+            pendingRequirements,
+            ownerMember,
+            members
+        )
+    }
+
+    fun sendJoinRequest(userEmail: String, tripId: Long, requestDto: CreateJoinRequestDto) {
+        val equipmentRefs = requestDto.providedEquipmentIds.map {
+            equipmentRepository.getById(it)
+        }
+        val senderRef = userRepository.getById(userEmail)
+        val tripRef = tripsRepository.getById(tripId)
+        val joinRequest = JoinRequest(
+            0,
+            LocalDateTime.now(),
+            requestDto.message,
+            equipmentRefs,
+            JoinRequestState.PENDING,
+            requestDto.contact,
+            senderRef,
+            tripRef
+        )
+        joinRequestRepository.save(joinRequest)
     }
 
     private fun getAllTrips(): List<TripDto> {

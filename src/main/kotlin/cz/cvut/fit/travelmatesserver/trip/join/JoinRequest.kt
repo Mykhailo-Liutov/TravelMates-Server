@@ -1,5 +1,6 @@
 package cz.cvut.fit.travelmatesserver.trip.join
 
+import cz.cvut.fit.travelmatesserver.trip.equipment.EquipmentRequirement
 import cz.cvut.fit.travelmatesserver.trip.models.entities.Trip
 import cz.cvut.fit.travelmatesserver.user.models.User
 import java.time.LocalDateTime
@@ -15,6 +16,9 @@ class JoinRequest(
     val sentAt: LocalDateTime,
     @Column(name = "message")
     val message: String,
+    @OneToMany
+    @Column(name = "provided_equipment")
+    val providedEquipment: List<EquipmentRequirement>,
     @Enumerated(EnumType.STRING)
     @Column(name = "state")
     val state: JoinRequestState,
