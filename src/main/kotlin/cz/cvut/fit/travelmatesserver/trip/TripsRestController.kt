@@ -39,7 +39,8 @@ class TripsRestController {
         authentication: Authentication,
         @PathVariable("tripId") tripId: Long
     ): ResponseEntity<DetailedTripDto> {
-        val detailedTrip = tripsService.getTripDetails(tripId)
+        val userDetails = authentication.principal as UserDetails
+        val detailedTrip = tripsService.getTripDetails(tripId, userDetails.email)
         return ResponseEntity.ok(detailedTrip)
     }
 

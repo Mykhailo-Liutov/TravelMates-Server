@@ -24,5 +24,9 @@ data class DetailedTripDto(
     @JsonProperty("owner")
     val owner: MemberDto,
     @JsonProperty("members")
-    val members: List<MemberDto>
+    val members: List<MemberDto>,
+    @JsonProperty("currentUserType")
+    val userType: UserType,
+    @JsonProperty("requests")
+    val requests: List<RequestDto>?
 )

@@ -66,7 +66,7 @@ class TripsService {
         }
     }
 
-    fun getTripDetails(tripId: Long): DetailedTripDto {
+    fun getTripDetails(tripId: Long, userEmail: String): DetailedTripDto {
         val trip = tripsRepository.findTripById(tripId)
         val pendingRequirements = trip.requirements.filterNot { requirement ->
             trip.members.any { it.providedEquipment.contains(requirement) }
@@ -84,6 +84,15 @@ class TripsService {
             //TODO Add member contact
             MemberDto(user.email, user.picture, user.name, "TODO", equipment)
         }
+        val userType = when {
+            ownerMember.email == userEmail -> UserType.OWNER
+            members.any { it.email == userEmail } -> UserType.MEMBER
+            else -> UserType.GUEST
+        }
+        val requests = when (userType) {
+            UserType.OWNER -> getTripRequests(trip)
+            else -> null
+        }
         return DetailedTripDto(
             trip.id,
             trip.title,
@@ -93,7 +102,9 @@ class TripsService {
             Coordinates(trip.latitude, trip.longitude),
             pendingRequirements,
             ownerMember,
-            members
+            members,
+            userType,
+            requests
         )
     }
 
@@ -114,6 +125,15 @@ class TripsService {
             tripRef
         )
         joinRequestRepository.save(joinRequest)
+    }
+
+    private fun getTripRequests(trip: Trip): List<RequestDto> {
+        val requests = trip.joinRequests.map {
+            RequestDto(it.id, PublicUserDto(it.sender.name, it.sender.picture), it.providedEquipment.map {
+                RequirementDto(it.id, it.name, true)
+            }, it.contact, it.message)
+        }
+        return requests
     }
 
     private fun getAllTrips(): List<TripDto> {
