@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "cz.cvut.fit"
-version = "0.4"
+version = "0.41"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {

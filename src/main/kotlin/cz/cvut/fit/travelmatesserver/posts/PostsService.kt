@@ -36,7 +36,7 @@ class PostsService {
     }
 
     fun getPosts(): List<PostDto> {
-        return postsRepository.findAll().map {
+        return postsRepository.findByOrderByCreatedAtDesc().map {
             PostDto(
                 it.id,
                 it.description,
