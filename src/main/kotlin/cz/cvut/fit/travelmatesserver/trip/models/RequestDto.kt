@@ -1,6 +1,7 @@
 package cz.cvut.fit.travelmatesserver.trip.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import cz.cvut.fit.travelmatesserver.user.models.UserDto
 
 data class RequestDto(
     @JsonProperty("id")

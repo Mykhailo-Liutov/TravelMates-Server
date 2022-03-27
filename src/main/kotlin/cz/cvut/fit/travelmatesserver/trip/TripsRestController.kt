@@ -2,9 +2,8 @@ package cz.cvut.fit.travelmatesserver.trip
 
 import cz.cvut.fit.travelmatesserver.security.UserDetails
 import cz.cvut.fit.travelmatesserver.trip.join.CreateJoinRequestDto
-import cz.cvut.fit.travelmatesserver.trip.models.DetailedTripDto
-import cz.cvut.fit.travelmatesserver.trip.models.NewTripDto
 import cz.cvut.fit.travelmatesserver.trip.models.TripDto
+import cz.cvut.fit.travelmatesserver.trip.models.NewTripDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
@@ -38,7 +37,7 @@ class TripsRestController {
     fun getTripDetails(
         authentication: Authentication,
         @PathVariable("tripId") tripId: Long
-    ): ResponseEntity<DetailedTripDto> {
+    ): ResponseEntity<TripDto> {
         val userDetails = authentication.principal as UserDetails
         val detailedTrip = tripsService.getTripDetails(tripId, userDetails.email)
         return ResponseEntity.ok(detailedTrip)

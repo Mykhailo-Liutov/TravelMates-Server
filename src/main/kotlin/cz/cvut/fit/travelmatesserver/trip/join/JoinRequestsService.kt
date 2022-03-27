@@ -29,6 +29,7 @@ class JoinRequestsService {
         val member = TripMember(
             0,
             LocalDateTime.now(),
+            existingRequest.contact,
             existingRequest.providedEquipment.toList(),
             existingRequest.trip,
             existingRequest.sender
@@ -42,7 +43,16 @@ class JoinRequestsService {
         ensureUserIsOwner(userEmail, requestId)
         val existingRequest = joinRequestRepository.getById(requestId)
         val rejectedRequest = with(existingRequest) {
-            JoinRequest(id, sentAt, message, providedEquipment.toList(), JoinRequestState.REJECTED, contact, sender, trip)
+            JoinRequest(
+                id,
+                sentAt,
+                message,
+                providedEquipment.toList(),
+                JoinRequestState.REJECTED,
+                contact,
+                sender,
+                trip
+            )
         }
         joinRequestRepository.save(rejectedRequest)
     }
