@@ -62,50 +62,13 @@ class TripsService {
         return when (filter) {
             TripsFilter.EXPLORE -> getExploreTrips(userEmail)
             TripsFilter.MY_TRIPS -> getMyTrips(userEmail)
-            TripsFilter.UNKNOWN -> getAllTrips()
+            TripsFilter.UNKNOWN -> getAllTrips(userEmail)
         }
     }
 
-    fun getTripDetails(tripId: Long, userEmail: String): DetailedTripDto {
+    fun getTripDetails(tripId: Long, userEmail: String): TripDto {
         val trip = tripsRepository.findTripById(tripId)
-        val pendingRequirements = trip.requirements.filterNot { requirement ->
-            trip.members.any { it.providedEquipment.contains(requirement) }
-        }.map {
-            RequirementDto(it.id, it.name, false)
-        }
-        val ownerMember = with(trip.owner) {
-            MemberDto(email, picture, name, trip.ownerContact, emptyList())
-        }
-        val members = trip.members.map {
-            val user = it.memberUser
-            val equipment = it.providedEquipment.map {
-                RequirementDto(it.id, it.name, true)
-            }
-            //TODO Add member contact
-            MemberDto(user.email, user.picture, user.name, "TODO", equipment)
-        }
-        val userType = when {
-            ownerMember.email == userEmail -> UserType.OWNER
-            members.any { it.email == userEmail } -> UserType.MEMBER
-            else -> UserType.GUEST
-        }
-        val requests = when (userType) {
-            UserType.OWNER -> getTripRequests(trip)
-            else -> null
-        }
-        return DetailedTripDto(
-            trip.id,
-            trip.title,
-            trip.description,
-            trip.suggestedDate,
-            trip.state,
-            Coordinates(trip.latitude, trip.longitude),
-            pendingRequirements,
-            ownerMember,
-            members,
-            userType,
-            requests
-        )
+        return tripsConverter.entityToDto(trip, userEmail)
     }
 
     fun sendJoinRequest(userEmail: String, tripId: Long, requestDto: CreateJoinRequestDto) {
@@ -122,38 +85,31 @@ class TripsService {
             JoinRequestState.PENDING,
             requestDto.contact,
             senderRef,
-            tripRef
+            tripRef,
+            rejectionReason = null
         )
         joinRequestRepository.save(joinRequest)
     }
 
-    private fun getTripRequests(trip: Trip): List<RequestDto> {
-        val requests = trip.joinRequests.map {
-            RequestDto(it.id, PublicUserDto(it.sender.name, it.sender.picture), it.providedEquipment.map {
-                RequirementDto(it.id, it.name, true)
-            }, it.contact, it.message)
-        }
-        return requests
-    }
 
-    private fun getAllTrips(): List<TripDto> {
+    private fun getAllTrips(userEmail: String): List<TripDto> {
         val trips = tripsRepository.findAll()
         return trips.map {
-            tripsConverter.entityToDto(it)
+            tripsConverter.entityToDto(it, userEmail)
         }
     }
 
     private fun getMyTrips(userEmail: String): List<TripDto> {
         val myTrips = tripsRepository.findMyTrips(userEmail)
         return myTrips.map {
-            tripsConverter.entityToDto(it)
+            tripsConverter.entityToDto(it, userEmail)
         }
     }
 
     private fun getExploreTrips(userEmail: String): List<TripDto> {
         val exploreTrips = tripsRepository.findExploreTrips(userEmail)
         return exploreTrips.map {
-            tripsConverter.entityToDto(it)
+            tripsConverter.entityToDto(it, userEmail)
         }
     }
 

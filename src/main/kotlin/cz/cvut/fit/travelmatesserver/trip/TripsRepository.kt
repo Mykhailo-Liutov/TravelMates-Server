@@ -15,8 +15,10 @@ interface TripsRepository : JpaRepository<Trip, Long> {
         value = "SELECT trip.*\n" +
                 "FROM trip\n" +
                 "         LEFT JOIN trip_member ON trip_member.member_trip_id = trip.id\n" +
+                "         LEFT JOIN join_request ON join_request.trip = trip.id\n" +
                 "WHERE trip.owner = :userEmail OR\n" +
-                "      trip_member.member_user = :userEmail"
+                "      trip_member.member_user = :userEmail OR\n" +
+                "      join_request.sender = :userEmail"
     )
     fun findMyTrips(@Param("userEmail") userEmail: String): List<Trip>
 

@@ -29,5 +29,7 @@ class JoinRequest(
     val sender: User,
     @ManyToOne
     @JoinColumn(name = "trip")
-    val trip: Trip
+    val trip: Trip,
+    @Column(name = "rejectionReason")
+    val rejectionReason: String?
 )

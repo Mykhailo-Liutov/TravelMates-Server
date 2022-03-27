@@ -13,6 +13,8 @@ class TripMember(
     val id: Long,
     @Column(name = "joined_at")
     val joinedAt: LocalDateTime,
+    @Column(name = "contact")
+    val contact: String,
     @OneToMany
     @Column(name = "provided_equipment")
     val providedEquipment: List<EquipmentRequirement>,
