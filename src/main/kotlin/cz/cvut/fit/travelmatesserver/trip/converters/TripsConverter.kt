@@ -51,7 +51,7 @@ class TripsConverter {
         with(joinRequest) {
             return RequestDto(id, PublicUserDto(sender.name, sender.picture), providedEquipment.map {
                 RequirementDto(it.id, it.name, true)
-            }, contact, message)
+            }, contact, message, state, rejectionReason)
         }
     }
 

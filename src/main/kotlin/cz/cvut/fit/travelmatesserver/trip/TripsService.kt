@@ -85,7 +85,8 @@ class TripsService {
             JoinRequestState.PENDING,
             requestDto.contact,
             senderRef,
-            tripRef
+            tripRef,
+            rejectionReason = null
         )
         joinRequestRepository.save(joinRequest)
     }

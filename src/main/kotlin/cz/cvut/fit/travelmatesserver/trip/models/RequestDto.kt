@@ -1,7 +1,7 @@
 package cz.cvut.fit.travelmatesserver.trip.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import cz.cvut.fit.travelmatesserver.user.models.UserDto
+import cz.cvut.fit.travelmatesserver.trip.join.JoinRequestState
 
 data class RequestDto(
     @JsonProperty("id")
@@ -13,5 +13,9 @@ data class RequestDto(
     @JsonProperty("contact")
     val contact: String,
     @JsonProperty("message")
-    val message: String
+    val message: String,
+    @JsonProperty("state")
+    val state: JoinRequestState,
+    @JsonProperty("rejectionReason")
+    val rejectionReason: String?
 )

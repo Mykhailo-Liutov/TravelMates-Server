@@ -39,19 +39,21 @@ class JoinRequestsService {
     }
 
     @Transactional
-    fun rejectRequest(userEmail: String, requestId: Long) {
+    fun rejectRequest(userEmail: String, requestId: Long, rejectMessage: String, allowResend: Boolean) {
         ensureUserIsOwner(userEmail, requestId)
         val existingRequest = joinRequestRepository.getById(requestId)
+        val newState = if (allowResend) JoinRequestState.REJECTED_ALLOW_RESEND else JoinRequestState.REJECTED_NO_RESEND
         val rejectedRequest = with(existingRequest) {
             JoinRequest(
                 id,
                 sentAt,
                 message,
                 providedEquipment.toList(),
-                JoinRequestState.REJECTED,
+                newState,
                 contact,
                 sender,
-                trip
+                trip,
+                rejectMessage
             )
         }
         joinRequestRepository.save(rejectedRequest)

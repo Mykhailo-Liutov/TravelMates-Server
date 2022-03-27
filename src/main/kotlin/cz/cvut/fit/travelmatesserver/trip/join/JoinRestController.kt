@@ -28,10 +28,16 @@ class JoinRestController {
     @PostMapping("{requestId}/reject")
     fun rejectRequest(
         authentication: Authentication,
-        @PathVariable("requestId") requestId: Long
+        @PathVariable("requestId") requestId: Long,
+        @RequestBody rejectRequestDto: RejectRequestDto
     ): ResponseEntity<Unit> {
         val userDetails = authentication.principal as UserDetails
-        joinRequestsService.rejectRequest(userDetails.email, requestId)
+        joinRequestsService.rejectRequest(
+            userDetails.email,
+            requestId,
+            rejectRequestDto.reason,
+            rejectRequestDto.allowResend
+        )
         return ResponseEntity.ok().build()
     }
 
