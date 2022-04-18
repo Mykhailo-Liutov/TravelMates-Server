@@ -1,6 +1,7 @@
 package cz.cvut.fit.travelmatesserver.trip.converters
 
 import cz.cvut.fit.travelmatesserver.trip.join.JoinRequest
+import cz.cvut.fit.travelmatesserver.trip.join.JoinRequestState
 import cz.cvut.fit.travelmatesserver.trip.models.*
 import cz.cvut.fit.travelmatesserver.trip.models.entities.Trip
 
@@ -29,7 +30,9 @@ class TripsConverter {
             else -> UserType.GUEST
         }
         val currentUserRequest = trip.joinRequests.firstOrNull { it.sender.email == userEmail }
-        val otherJoinRequests = trip.joinRequests.filterNot { it.sender.email == userEmail }
+        val otherJoinRequests = trip.joinRequests
+            .filterNot { it.sender.email == userEmail }
+            .filter { it.state == JoinRequestState.PENDING }
 
         return TripDto(
             trip.id,
