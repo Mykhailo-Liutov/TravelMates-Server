@@ -4,5 +4,8 @@ import cz.cvut.fit.travelmatesserver.posts.models.Post
 import org.springframework.data.repository.CrudRepository
 
 interface PostsRepository : CrudRepository<Post, Long> {
-    fun findByOrderByCreatedAtDesc():List<Post>
+    /**
+     * @return List of posts, sorted by creation date
+     */
+    fun findByOrderByCreatedAtDesc(): List<Post>
 }

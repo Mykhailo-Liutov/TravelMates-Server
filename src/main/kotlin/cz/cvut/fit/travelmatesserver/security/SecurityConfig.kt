@@ -14,6 +14,9 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
 
     private val jwtTokenFilter = JwtTokenFilter()
 
+    /**
+     * Configure security of all endpoints
+     */
     override fun configure(http: HttpSecurity) {
         // Set session management to stateless
         var config = http
@@ -35,6 +38,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             }
             .and()
 
+        //Requests to actuator, including health check, don't require authorization
         config.authorizeRequests()
             .antMatchers("/actuator/*").permitAll()
             .anyRequest().authenticated()

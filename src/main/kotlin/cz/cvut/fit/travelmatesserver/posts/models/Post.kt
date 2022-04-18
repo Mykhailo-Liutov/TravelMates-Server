@@ -4,6 +4,9 @@ import cz.cvut.fit.travelmatesserver.user.models.User
 import java.time.LocalDateTime
 import javax.persistence.*
 
+/**
+ * Database entity for Post object
+ */
 @Entity(name = "post")
 class Post(
     @GeneratedValue

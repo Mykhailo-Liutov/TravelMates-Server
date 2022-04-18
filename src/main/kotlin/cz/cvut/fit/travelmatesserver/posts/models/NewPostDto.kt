@@ -3,6 +3,9 @@ package cz.cvut.fit.travelmatesserver.posts.models
 import com.fasterxml.jackson.annotation.JsonProperty
 import cz.cvut.fit.travelmatesserver.trip.models.Coordinates
 
+/**
+ * DTO for new post object
+ */
 data class NewPostDto(
     @JsonProperty("description")
     val description: String,

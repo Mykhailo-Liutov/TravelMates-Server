@@ -3,6 +3,10 @@ package cz.cvut.fit.travelmatesserver.trip.models
 import com.fasterxml.jackson.annotation.JsonProperty
 import cz.cvut.fit.travelmatesserver.trip.join.JoinRequestState
 
+
+/**
+ * DTO for join request object
+ */
 data class RequestDto(
     @JsonProperty("id")
     val id: Long,

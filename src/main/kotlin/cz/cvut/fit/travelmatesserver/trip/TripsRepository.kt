@@ -9,6 +9,11 @@ import org.springframework.stereotype.Repository
 @Repository
 interface TripsRepository : JpaRepository<Trip, Long> {
 
+    /**
+     * @param userEmail email of user, based on which filtering is done
+     * @return List of my trips of current user, which are trips where user is owner,
+     * member, or has sent a join request
+     */
     @Query(
         nativeQuery = true,
         value = "SELECT trip.*\n" +
@@ -21,6 +26,11 @@ interface TripsRepository : JpaRepository<Trip, Long> {
     )
     fun findMyTrips(@Param("userEmail") userEmail: String): List<Trip>
 
+    /**
+     * @param userEmail email of user, based on which filtering is done
+     * @return List of explore trips of current user, which are trips where user is not an owner,
+     * a member, and hasn't sent a join request
+     */
     @Query(
         nativeQuery = true,
         value = "SELECT trip.*\n" +
@@ -34,5 +44,10 @@ interface TripsRepository : JpaRepository<Trip, Long> {
     )
     fun findExploreTrips(@Param("userEmail") userEmail: String): List<Trip>
 
+    /**
+     * Finds a trip with given id, or throws an Exception
+     * @param tripId id of a trip to find
+     * @return the found trip
+     */
     fun findTripById(tripId: Long): Trip
 }

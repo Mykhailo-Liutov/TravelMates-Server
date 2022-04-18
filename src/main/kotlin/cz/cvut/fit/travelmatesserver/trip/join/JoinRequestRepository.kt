@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface JoinRequestRepository : JpaRepository<JoinRequest, Long> {
+    /**
+     * Finds a unique join request of user for given trip
+     */
     @Query(
         nativeQuery = true,
         value = "SELECT * FROM join_request WHERE sender=:userEmail AND trip=:tripId"

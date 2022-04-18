@@ -6,6 +6,9 @@ import cz.cvut.fit.travelmatesserver.user.models.User
 import java.time.LocalDateTime
 import javax.persistence.*
 
+/**
+ * Database entity for JoinRequest object
+ */
 @Entity(name = "join_request")
 class JoinRequest(
     @GeneratedValue

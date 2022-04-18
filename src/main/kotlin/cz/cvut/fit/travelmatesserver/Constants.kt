@@ -1,6 +1,9 @@
 package cz.cvut.fit.travelmatesserver
 
+/**
+ * Storage for constant values
+ */
 object Constants {
-    const val DB_PASSWORD = "aFfbxP:633g(6eVp"
+    //Url for verifying user's auth token
     const val JWKS_URL = "https://cognito-idp.us-east-2.amazonaws.com/us-east-2_SSgxGyUmI"
 }

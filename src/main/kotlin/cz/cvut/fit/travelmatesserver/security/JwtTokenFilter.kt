@@ -21,6 +21,9 @@ import javax.servlet.http.HttpServletResponse
 @Component
 class JwtTokenFilter : OncePerRequestFilter() {
 
+    /**
+     * Verifies authorization of the request's JWT token
+     */
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
@@ -50,6 +53,10 @@ class JwtTokenFilter : OncePerRequestFilter() {
         chain.doFilter(request, response)
     }
 
+    /**
+     * Validates the signature of the JWT token
+     * @return If token is valid or not
+     */
     private fun validateToken(token: String): Boolean {
         return try {
             val jwt = JWT.decode(token)
@@ -64,6 +71,10 @@ class JwtTokenFilter : OncePerRequestFilter() {
         }
     }
 
+    /**
+     * Extracts user details from the claims of given token
+     * @return details of the user connected to given token
+     */
     private fun extractDetails(token: String): UserDetails {
         val jwt = JWT.decode(token)
         return UserDetails(

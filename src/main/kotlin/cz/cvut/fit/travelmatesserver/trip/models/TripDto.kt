@@ -5,6 +5,10 @@ import cz.cvut.fit.travelmatesserver.trip.models.entities.TripState
 import org.springframework.format.annotation.DateTimeFormat
 import java.time.LocalDate
 
+
+/**
+ * DTO for trip object
+ */
 data class TripDto(
     @JsonProperty("id")
     val id: Long,

@@ -5,6 +5,9 @@ import cz.cvut.fit.travelmatesserver.user.models.User
 import java.time.LocalDateTime
 import javax.persistence.*
 
+/**
+ * Database entity for TripMember object
+ */
 @Entity(name = "trip_member")
 class TripMember(
     @GeneratedValue

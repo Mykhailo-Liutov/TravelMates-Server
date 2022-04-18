@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 @Configuration
 class WebConfig : WebMvcConfigurer {
     override fun addFormatters(registry: FormatterRegistry) {
+        //Add converter between TripsFilter and String
         registry.addConverter(StringToTripFilterConverter())
     }
 }

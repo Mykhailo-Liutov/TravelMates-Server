@@ -2,6 +2,9 @@ package cz.cvut.fit.travelmatesserver.user.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
+/**
+ * DTO for updating user
+ */
 data class UserUpdateDto(
     @JsonProperty("name")
     val name: String,

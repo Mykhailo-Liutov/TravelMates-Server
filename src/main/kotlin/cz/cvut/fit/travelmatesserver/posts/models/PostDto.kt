@@ -5,6 +5,9 @@ import cz.cvut.fit.travelmatesserver.trip.models.Coordinates
 import cz.cvut.fit.travelmatesserver.trip.models.PublicUserDto
 import java.time.LocalDateTime
 
+/**
+ * DTO for post object
+ */
 data class PostDto(
     @JsonProperty("id")
     val id: Long,

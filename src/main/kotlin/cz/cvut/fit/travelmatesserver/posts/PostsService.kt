@@ -19,6 +19,11 @@ class PostsService {
     @Autowired
     lateinit var userRepository: UserRepository
 
+    /**
+     * Creates a new post
+     * @param newPostDto post to create
+     * @param userEmail email of creator
+     */
     fun createPost(newPostDto: NewPostDto, userEmail: String) {
         val ownerRef = userRepository.getById(userEmail)
         val postEntity = with(newPostDto) {
@@ -35,6 +40,9 @@ class PostsService {
         postsRepository.save(postEntity)
     }
 
+    /**
+     * @return List of posts, sorted by creation date
+     */
     fun getPosts(): List<PostDto> {
         return postsRepository.findByOrderByCreatedAtDesc().map {
             PostDto(

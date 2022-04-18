@@ -4,6 +4,9 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
 
+/**
+ * Database entity for User object
+ */
 @Entity
 class User(
     @Id

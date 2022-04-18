@@ -2,6 +2,10 @@ package cz.cvut.fit.travelmatesserver.trip.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
+
+/**
+ * DTO for member object
+ */
 data class MemberDto(
     @JsonProperty("email")
     val email: String,

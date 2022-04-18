@@ -4,13 +4,22 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.format.annotation.DateTimeFormat
 import java.time.LocalDate
 
+
+/**
+ * DTO for creating a new trip
+ */
 data class NewTripDto(
-    @JsonProperty("title") val title: String,
-    @JsonProperty("description") val description: String,
-    @JsonProperty("location") val location: Coordinates,
+    @JsonProperty("title")
+    val title: String,
+    @JsonProperty("description")
+    val description: String,
+    @JsonProperty("location")
+    val location: Coordinates,
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonProperty("suggestedDate")
     val suggestedDate: LocalDate,
-    @JsonProperty("ownerContact") val ownerContact: String,
-    @JsonProperty("requirements") val requirements: List<NewRequirement>
+    @JsonProperty("ownerContact")
+    val ownerContact: String,
+    @JsonProperty("requirements")
+    val requirements: List<NewRequirement>
 )
