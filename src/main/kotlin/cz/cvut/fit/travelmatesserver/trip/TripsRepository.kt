@@ -30,7 +30,7 @@ interface TripsRepository : JpaRepository<Trip, Long> {
                 "WHERE trip.owner != :userEmail AND (\n" +
                 "      trip_member.member_user IS NULL OR trip_member.member_user != :userEmail) AND" +
                 "      (join_request.sender IS NULL OR join_request.sender != :userEmail) AND" +
-                "       (trip.state == \"GATHERING\")"
+                "       (trip.state = \"GATHERING\")"
     )
     fun findExploreTrips(@Param("userEmail") userEmail: String): List<Trip>
 
