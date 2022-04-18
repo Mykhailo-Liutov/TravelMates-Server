@@ -72,6 +72,10 @@ class TripsService {
     }
 
     fun sendJoinRequest(userEmail: String, tripId: Long, requestDto: CreateJoinRequestDto) {
+        joinRequestRepository.findRequest(userEmail, tripId)?.let {
+            //Delete existing request if present
+            joinRequestRepository.deleteById(it.id)
+        }
         val equipmentRefs = requestDto.providedEquipmentIds.map {
             equipmentRepository.getById(it)
         }
