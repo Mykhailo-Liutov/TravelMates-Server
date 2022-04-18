@@ -46,7 +46,8 @@ class TripsConverter {
             members,
             userType,
             otherJoinRequests.map { convertRequest(it) },
-            currentUserRequest?.let { convertRequest(it) }
+            currentUserRequest?.let { convertRequest(it) },
+            trip.tripImages
         )
     }
 

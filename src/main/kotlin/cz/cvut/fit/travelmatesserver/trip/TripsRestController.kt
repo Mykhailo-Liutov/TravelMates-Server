@@ -4,6 +4,7 @@ import cz.cvut.fit.travelmatesserver.security.UserDetails
 import cz.cvut.fit.travelmatesserver.trip.join.CreateJoinRequestDto
 import cz.cvut.fit.travelmatesserver.trip.models.TripDto
 import cz.cvut.fit.travelmatesserver.trip.models.NewTripDto
+import cz.cvut.fit.travelmatesserver.trip.models.UploadImageDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
@@ -51,6 +52,17 @@ class TripsRestController {
     ): ResponseEntity<Unit> {
         val userDetails = authentication.principal as UserDetails
         tripsService.sendJoinRequest(userDetails.email, tripId, createTripRequestDto)
+        return ResponseEntity.ok().build()
+    }
+
+    @PostMapping("{tripId}/images")
+    fun uploadImage(
+        authentication: Authentication,
+        @PathVariable("tripId") tripId: Long,
+        @RequestBody uploadImageDto: UploadImageDto
+    ): ResponseEntity<Unit> {
+        val userDetails = authentication.principal as UserDetails
+        tripsService.uploadImage(userDetails.email, tripId, uploadImageDto.imageRef)
         return ResponseEntity.ok().build()
     }
 

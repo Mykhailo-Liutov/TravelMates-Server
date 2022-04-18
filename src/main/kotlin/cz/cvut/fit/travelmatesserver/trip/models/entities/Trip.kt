@@ -35,5 +35,9 @@ class Trip(
     @OneToMany(mappedBy = "trip")
     val requirements: List<EquipmentRequirement>,
     @OneToMany(mappedBy = "trip")
-    val joinRequests: List<JoinRequest>
+    val joinRequests: List<JoinRequest>,
+    @ElementCollection
+    @CollectionTable(name = "trip_images", joinColumns = [JoinColumn(name = "trip_id")])
+    @Column(name = "trip_image")
+    val tripImages: List<String>
 )

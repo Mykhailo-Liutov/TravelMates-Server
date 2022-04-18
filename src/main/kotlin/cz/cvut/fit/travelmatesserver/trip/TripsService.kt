@@ -48,6 +48,7 @@ class TripsService {
                 ownerRef,
                 emptyList(),
                 emptyList(),
+                emptyList(),
                 emptyList()
             )
         }
@@ -95,6 +96,31 @@ class TripsService {
         joinRequestRepository.save(joinRequest)
     }
 
+    fun uploadImage(userEmail: String, tripId: Long, imageRef: String) {
+        val existingTrip = tripsRepository.findTripById(tripId)
+        if (existingTrip.owner.email != userEmail && existingTrip.members.none { it.memberUser.email == userEmail }) {
+            throw IllegalAccessException("User is not a member or owner of this trip.")
+        }
+        val newImages = existingTrip.tripImages + imageRef
+        val newTrip = with(existingTrip) {
+            Trip(
+                id,
+                title,
+                description,
+                latitude,
+                longitude,
+                suggestedDate,
+                ownerContact,
+                state,
+                owner,
+                members,
+                requirements,
+                joinRequests,
+                newImages
+            )
+        }
+        tripsRepository.save(newTrip)
+    }
 
     private fun getAllTrips(userEmail: String): List<TripDto> {
         val trips = tripsRepository.findAll()

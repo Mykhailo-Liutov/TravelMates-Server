@@ -30,5 +30,7 @@ data class TripDto(
     @JsonProperty("requests")
     val requests: List<RequestDto>?,
     @JsonProperty("currentUserRequest")
-    val currentUserRequest: RequestDto?
+    val currentUserRequest: RequestDto?,
+    @JsonProperty("images")
+    val images: List<String>?
 )
