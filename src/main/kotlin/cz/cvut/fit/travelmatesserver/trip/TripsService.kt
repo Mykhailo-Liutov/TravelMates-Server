@@ -122,6 +122,39 @@ class TripsService {
         tripsRepository.save(newTrip)
     }
 
+    fun stopGatheringTrip(userEmail: String, tripId: Long) {
+        updateTripState(userEmail, tripId, TripState.GATHERED)
+    }
+
+    fun finishTrip(userEmail: String, tripId: Long) {
+        updateTripState(userEmail, tripId, TripState.FINISHED)
+    }
+
+    private fun updateTripState(userEmail: String, tripId: Long, targetState: TripState) {
+        val trip = tripsRepository.getById(tripId)
+        if (trip.owner.email != userEmail) {
+            throw IllegalAccessException("Only trip owner can change trip's state")
+        }
+        val newTrip = with(trip) {
+            Trip(
+                id,
+                title,
+                description,
+                latitude,
+                longitude,
+                suggestedDate,
+                ownerContact,
+                targetState,
+                owner,
+                members,
+                requirements,
+                joinRequests,
+                tripImages
+            )
+        }
+        tripsRepository.save(newTrip)
+    }
+
     private fun getAllTrips(userEmail: String): List<TripDto> {
         val trips = tripsRepository.findAll()
         return trips.map {

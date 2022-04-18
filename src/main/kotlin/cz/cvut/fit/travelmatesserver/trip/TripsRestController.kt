@@ -66,6 +66,26 @@ class TripsRestController {
         return ResponseEntity.ok().build()
     }
 
+    @PatchMapping("{tripId}/stopGathering")
+    fun stopGatheringTrip(
+        authentication: Authentication,
+        @PathVariable("tripId") tripId: Long
+    ): ResponseEntity<Unit> {
+        val userDetails = authentication.principal as UserDetails
+        tripsService.stopGatheringTrip(userDetails.email, tripId)
+        return ResponseEntity.ok().build()
+    }
+
+    @PatchMapping("{tripId}/finish")
+    fun finishTrip(
+        authentication: Authentication,
+        @PathVariable("tripId") tripId: Long
+    ): ResponseEntity<Unit> {
+        val userDetails = authentication.principal as UserDetails
+        tripsService.finishTrip(userDetails.email, tripId)
+        return ResponseEntity.ok().build()
+    }
+
     companion object {
         private const val PARAM_FILTER = "filter"
     }
