@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class UserService {
-
-    @Autowired
-    lateinit var userRepository: UserRepository
+class UserService @Autowired constructor(
+    private val userRepository: UserRepository
+) {
 
     /**
      * Ensures that user is present in the server's database

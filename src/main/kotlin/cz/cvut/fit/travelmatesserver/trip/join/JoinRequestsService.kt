@@ -11,13 +11,10 @@ import java.time.LocalDateTime
 import javax.transaction.Transactional
 
 @Service
-class JoinRequestsService {
-
-    @Autowired
-    lateinit var memberRepository: MemberRepository
-
-    @Autowired
-    lateinit var joinRequestRepository: JoinRequestRepository
+class JoinRequestsService @Autowired constructor(
+    private val memberRepository: MemberRepository,
+    private val joinRequestRepository: JoinRequestRepository
+) {
 
     /**
      * Accepts a given join request on behalf of given user.

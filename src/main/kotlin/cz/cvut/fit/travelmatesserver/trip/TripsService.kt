@@ -16,22 +16,13 @@ import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
-class TripsService {
-
-    @Autowired
-    lateinit var tripsRepository: TripsRepository
-
-    @Autowired
-    lateinit var userRepository: UserRepository
-
-    @Autowired
-    lateinit var equipmentRepository: EquipmentRepository
-
-    @Autowired
-    lateinit var joinRequestRepository: JoinRequestRepository
-
-    @Autowired
-    lateinit var tripsConverter: TripsConverter
+class TripsService @Autowired constructor(
+    private val tripsRepository: TripsRepository,
+    private val userRepository: UserRepository,
+    private val equipmentRepository: EquipmentRepository,
+    private val joinRequestRepository: JoinRequestRepository,
+    private val tripsConverter: TripsConverter
+) {
 
     /**
      * Creates a new trip

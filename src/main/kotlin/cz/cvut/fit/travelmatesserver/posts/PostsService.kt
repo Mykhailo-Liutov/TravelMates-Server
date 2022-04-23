@@ -11,13 +11,11 @@ import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
-class PostsService {
+class PostsService @Autowired constructor(
+    private val postsRepository: PostsRepository,
+    private val userRepository: UserRepository
+) {
 
-    @Autowired
-    lateinit var postsRepository: PostsRepository
-
-    @Autowired
-    lateinit var userRepository: UserRepository
 
     /**
      * Creates a new post

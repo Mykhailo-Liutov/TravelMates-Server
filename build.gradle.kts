@@ -34,6 +34,7 @@ dependencies {
     implementation("com.auth0:jwks-rsa:0.20.0")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.6.2")
+    testImplementation("io.mockk:mockk:1.12.3")
 }
 
 tasks.withType<KotlinCompile> {
