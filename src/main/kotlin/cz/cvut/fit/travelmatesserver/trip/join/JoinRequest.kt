@@ -19,7 +19,7 @@ class JoinRequest(
     val sentAt: LocalDateTime,
     @Column(name = "message")
     val message: String,
-    @OneToMany
+    @ManyToMany
     @Column(name = "provided_equipment")
     val providedEquipment: List<EquipmentRequirement>,
     @Enumerated(EnumType.STRING)

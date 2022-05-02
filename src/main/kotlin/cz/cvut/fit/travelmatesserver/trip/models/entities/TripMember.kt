@@ -18,7 +18,7 @@ class TripMember(
     val joinedAt: LocalDateTime,
     @Column(name = "contact")
     val contact: String,
-    @OneToMany
+    @ManyToMany
     @Column(name = "provided_equipment")
     val providedEquipment: List<EquipmentRequirement>,
     @ManyToOne
