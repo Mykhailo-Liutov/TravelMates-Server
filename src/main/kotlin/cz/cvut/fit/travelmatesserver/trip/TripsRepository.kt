@@ -16,7 +16,7 @@ interface TripsRepository : JpaRepository<Trip, Long> {
      */
     @Query(
         nativeQuery = true,
-        value = "SELECT trip.*\n" +
+        value = "SELECT DISTINCT trip.*\n" +
                 "FROM trip\n" +
                 "         LEFT JOIN trip_member ON trip_member.member_trip_id = trip.id\n" +
                 "         LEFT JOIN join_request ON join_request.trip = trip.id\n" +
@@ -33,7 +33,7 @@ interface TripsRepository : JpaRepository<Trip, Long> {
      */
     @Query(
         nativeQuery = true,
-        value = "SELECT trip.*\n" +
+        value = "SELECT DISTINCT trip.*\n" +
                 "FROM trip\n" +
                 "         LEFT JOIN trip_member ON trip_member.member_trip_id = trip.id\n" +
                 "         LEFT JOIN join_request ON join_request.trip = trip.id\n" +
